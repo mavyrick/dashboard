@@ -4,16 +4,15 @@ import './App.css';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import NetCentsImg from './netcents.png';
-import {Line as LineChart} from 'react-chartjs';
+// import {Line as LineChart} from 'react-chartjs';
+import {Line as LineChart} from 'react-chartjs-2';
 import Chart from 'chart.js';
 require("bootstrap/less/bootstrap.less");
 
-var chartData = {
-    title: "Test",
+const chartData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
         {
-            label: "My First dataset",
             fill: true,
             pointHoverRadius: 5,
             pointRadius: 1,
@@ -21,54 +20,53 @@ var chartData = {
             data: [65, 59, 80, 81, 56, 55, 40],
             spanGaps: false,
             fillColor: "lightsteelblue",
+            backgroundColor: "lightsteelblue",
+            borderColor: 'mediumpurple',
         }
     ],
 };
 
-var chartOptions = {
-  //Boolean - Show a backdrop to the scale label
-      scaleShowLabelBackdrop : true,
+const chartOptions =
 
-      //String - The colour of the label backdrop
-      scaleBackdropColor : "rgba(255,255,255,0.75)",
-
-      // Boolean - Whether the scale should begin at zero
-      // scaleBeginAtZero : true,
-
-      //Number - The backdrop padding above & below the label in pixels
-      scaleBackdropPaddingY : 2,
-
-      //Number - The backdrop padding to the side of the label in pixels
-      scaleBackdropPaddingX : 2,
-
-      //Boolean - Show line for each value in the scale
-      scaleShowLine : true,
-
-      //Boolean - Stroke a line around each segment in the chart
-      segmentShowStroke : true,
-
-      //String - The colour of the stroke on each segement.
-      segmentStrokeColor : "#fff",
-
-      //Number - The width of the stroke value in pixels
-      segmentStrokeWidth : 2,
-
-      //Number - Amount of animation steps
-      // animationSteps : 100,
-
-      //String - Animation easing effect.
-      // animationEasing : "linear",
-
-      //Boolean - Whether to animate the rotation of the chart
-      // animateRotate : true,
-
-      //Boolean - Whether to animate scaling the chart from the centre
-      // animateScale : false,
-
-      //String - A legend template
-      // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-
-  }
+{
+    title: {
+            display: true,
+            text: 'Chart',
+            fontSize: 25,
+            fontColor: 'black',
+            position: 'top',
+        },
+        pointDot : false,
+        // responsive: true,
+        maintainAspectRatio: false,
+        responsive: false,
+        legend: {
+           display: false
+         },
+         tooltips: {
+           enabled: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    fontColor: 'black',
+                    fontStyle: 'bold',
+                },
+                gridLines: {
+                  // display: false,
+                },
+            }],
+          xAxes: [{
+                ticks: {
+                    fontColor: 'black',
+                    fontStyle: 'bold'
+                },
+                gridLines: {
+                  display: false,
+                },
+            }]
+        }
+}
 
 var perPage = 10
 var url = 'http://localhost:3000/'
@@ -149,6 +147,14 @@ class App extends Component {
         )
   }
 
+  renderRevenueData(cartData) {
+            return(
+          <div>
+          <Revenue cartData={cartData} />
+          </div>
+        )
+  }
+
   renderUserData(userData) {
     if(userData.users) {
       return this.state.userData.users.map((userData) => {
@@ -220,7 +226,7 @@ class App extends Component {
               <div className="row">
               <div className="col-sm-3">
               <h1 className="data-title">Sign-up List</h1>
-              <table className="table table-condensed table-bordered" id="data-table">
+              <table className="table table-bordered" id="data-table">
                 <tbody>
                 <tr>
                   </tr>
@@ -240,14 +246,13 @@ class App extends Component {
                 {this.renderTotalUserData(this.state.userData)}
               </div>
                 <center><div className="col-sm-6">
-              {/* <label for = "LineChart" id="chart-label">
-                  NetCents Chart
-                  </label> */}
-                  <LineChart data={chartData} options={chartOptions} width="475" height="200"/>
+                <div id="line-chart">
+                  <LineChart ref="chart" data={chartData} options={chartOptions} width="435" height="225"/>
+                  </div>
                 </div></center>
                 <div className="col-sm-3">
                 <h1 className="data-title">New Clients</h1>
-                <table className="table table-condensed table-bordered" id="data-table">
+                <table className="table table-curved table-bordered" id="data-table">
                   <tbody>
                     <tr>
                     </tr>
@@ -261,15 +266,15 @@ class App extends Component {
                   {this.renderTotalUserData(this.state.userData)}
                 </div>
                 <div className="col-sm-6">
-                  {this.renderOrderData(this.state.orderData)}
+                  {this.renderRevenueData(this.state.orderData)}
                 </div>
                 <div className="col-sm-3">
                 {this.renderCartData(this.state.cartData)}
                 </div>
               </div>
-              <div className="row">
-                <h1 id="revenue">Total Revenue: 1.55k</h1>
-                </div>
+              {/* <div className="row">
+                <h1 id="revenue">Total Revenue: $2,500,000</h1>
+                </div> */}
         </div>
         </center>
         </div>
@@ -350,6 +355,31 @@ class TotalUser extends Component {
       );
     };
   }
+
+  class Revenue extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      cartData: []
+    };
+  }
+
+  render() {
+    return (
+      <div className="data-wrapper">
+        <div>
+          <h1 id="revenue-title">Revenue</h1>
+        </div>
+      <div>
+        <h1 id="revenue-total">
+          $2,500,000
+        </h1>
+      </div>
+      </div>
+    );
+  };
+}
 
   class User extends Component {
 

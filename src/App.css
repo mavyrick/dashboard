@@ -25,7 +25,7 @@
 
 #wrapper {
   font-family: arial;
-  margin-top: -5px;
+  /*margin-top: -5px;*/
 }
 
 /*#dashboard-title {
@@ -38,7 +38,7 @@
 }*/
 
 #dashboard-container {
-  margin-top: -20px;
+  margin-top: -15px;
 }
 
 #data-table {
@@ -48,6 +48,7 @@
 td {
   text-align: center;
   font-size: 17px;
+  font-weight: bold;
 }
 
 /*.heading {
@@ -71,7 +72,9 @@ td {
   border-radius: 10px;
   width: 175px;
   font-size: 22px;
+  /*#f2f2fc*/
 }
+
 
 .data-total {
   display: inline-block;
@@ -80,7 +83,7 @@ td {
   font-weight: bold;
   /*background-color: gold;*/
   border-radius: 20px;
-  margin-top: -30px;
+  margin-top: -25px;
 }
 
 #chart-label {
@@ -90,14 +93,64 @@ td {
 }
 
 #netcents-image {
-  height: 125px;
+  height: 140px;
 }
 
-#revenue {
+#revenue-title{
+  display: inline-block;
+  font-weight: bold;
+  padding: 15px;
+  background-color: #ccccff;
+  border-radius: 10px;
+  width: 175px;
+  font-size: 22px;
+}
+
+#revenue-total {
+  display: inline-block;
+  font-size: 70px;
+  padding: 15px;
+  font-weight: bold;
+  /*background-color: gold;*/
+  border-radius: 20px;
+  margin-top: -5px;
+}
+
+/*#revenue {
   display: inline-block;
   margin-top: -10px;
   font-weight: bold;
   padding: 15px;
   border-radius: 10px;
   background-color: #ccccff;
+}*/
+
+#line-chart {
+  /*width: 475px;*/
+  border-radius: 15px;
+  margin-top: -27px;
+  /*padding: 15px;*/
 }
+
+table {
+  margin-top: 5px;
+}
+
+/*.table-curved {
+    border-collapse: separate;
+}
+.table-curved {
+    border: solid #ccc 1px;
+    border-radius: 15px;
+    border-top: 0px;
+}
+.table-curved td, .table-curved th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+}
+.table-curved tr > *:first-child {
+    border-left: 0px;
+}
+.table-curved tr:first-child > * {
+    border-top: 0px;
+}*/
