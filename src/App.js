@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import NetCentsImg from './netcents.png';
-// import {Line as LineChart} from 'react-chartjs';
 import {Line as LineChart} from 'react-chartjs-2';
 import Chart from 'chart.js';
+import TotalUser from './TotalUser.js';
+import Order from './Order.js';
+import User from './User.js';
+import Cart from './Cart.js';
+import Revenue from './Revenue.js';
 require("bootstrap/less/bootstrap.less");
+
+const username = window.prompt("Enter username:")
+const password = window.prompt("Enter password:")
 
 const chartData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -19,9 +25,9 @@ const chartData = {
             pointHitRadius: 10,
             data: [65, 59, 80, 81, 56, 55, 40],
             spanGaps: false,
-            fillColor: "lightsteelblue",
-            backgroundColor: "lightsteelblue",
-            borderColor: 'mediumpurple',
+            fillColor: "lightblue",
+            backgroundColor: "lightgrey",
+            borderColor: 'steelblue',
         }
     ],
 };
@@ -29,47 +35,44 @@ const chartData = {
 const chartOptions =
 
 {
-    title: {
-            display: true,
-            text: 'Chart',
-            fontSize: 25,
-            fontColor: 'black',
-            position: 'top',
-        },
-        pointDot : false,
-        // responsive: true,
-        maintainAspectRatio: false,
-        responsive: false,
-        legend: {
-           display: false
-         },
-         tooltips: {
-           enabled: false
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    fontColor: 'black',
-                    fontStyle: 'bold',
-                },
-                gridLines: {
-                  // display: false,
-                },
-            }],
-          xAxes: [{
-                ticks: {
-                    fontColor: 'black',
-                    fontStyle: 'bold'
-                },
-                gridLines: {
-                  display: false,
-                },
-            }]
-        }
+  title: {
+          display: true,
+          text: 'Chart',
+          fontSize: 25,
+          fontColor: 'black',
+          position: 'top',
+      },
+      pointDot : false,
+      // responsive: true,
+      maintainAspectRatio: false,
+      responsive: false,
+      legend: {
+         display: false
+       },
+       tooltips: {
+         enabled: false
+      },
+      scales: {
+          yAxes: [{
+              ticks: {
+                  fontColor: 'black',
+                  fontStyle: 'bold',
+              },
+              gridLines: {
+                // display: false,
+              },
+          }],
+        xAxes: [{
+              ticks: {
+                  fontColor: 'black',
+                  fontStyle: 'bold'
+              },
+              gridLines: {
+                display: false,
+              },
+          }]
+      }
 }
-
-var perPage = 10
-var url = 'http://localhost:3000/'
 
 class App extends Component {
   constructor(props) {
@@ -97,7 +100,7 @@ class App extends Component {
 
   getUserData() {
     var access = this
-    axios.get('http://localhost:5000/api/v1/dashboard/users/')
+    axios.get('http://localhost:5000/api/v1/dashboard/users/', {auth: {username: username, password: password}})
       .then(function(response) {
       access.setState({userData: response.data})
     });
@@ -105,7 +108,7 @@ class App extends Component {
 
   getOrderData() {
     var access = this
-    axios.get('http://localhost:5000/api/v1/dashboard/orders/')
+    axios.get('http://localhost:5000/api/v1/dashboard/orders/', {auth: {username: username, password: password}})
       .then(function(response) {
       access.setState({orderData: response.data})
     });
@@ -113,7 +116,7 @@ class App extends Component {
 
   getCartData() {
     var access = this
-    axios.get('http://localhost:5000/api/v1/dashboard/carts/')
+    axios.get('http://localhost:5000/api/v1/dashboard/carts/', {auth: {username: username, password: password}})
       .then(function(response) {
       access.setState({cartData: response.data})
     });
@@ -169,36 +172,18 @@ class App extends Component {
     }
   }
 
-// renderChartData(chartData) {
-//   React.createclass({
-//     render() {
-//     return(
-//       <div>
-//         <LineChart data={chartData} width="600" height="250"/>
-//       </div>
-//     );
-//   }
-//   });
-// }
-
-// var MyComponent = React.createClass({
-//   render: function() {
-//     return <LineChart data={chartData} options={chartOptions} width="600" height="250"/>
-//   }
-// });
-
   componentWillMount() {
     this.getUserData()
     this.getOrderData()
     this.getCartData()
   }
 
-  // componentDidMount() {
-  //   setInterval(function() {
-  //     this.getUserData;
-  //     this.getOrderData;
-  //   }, 1000)
-  // }
+  componentDidMount() {
+    setInterval(function() {
+      this.getUserData;
+      this.getOrderData;
+    }, 1000)
+  }
 
   componentDidMount() {
     setInterval(this.getUserData, 1000);
@@ -226,7 +211,7 @@ class App extends Component {
               <div className="row">
               <div className="col-sm-3">
               <h1 className="data-title">Sign-up List</h1>
-              <table className="table table-bordered" id="data-table">
+              <table id="data-table">
                 <tbody>
                 <tr>
                   </tr>
@@ -252,7 +237,7 @@ class App extends Component {
                 </div></center>
                 <div className="col-sm-3">
                 <h1 className="data-title">New Clients</h1>
-                <table className="table table-curved table-bordered" id="data-table">
+                <table id="data-table">
                   <tbody>
                     <tr>
                     </tr>
@@ -282,121 +267,121 @@ class App extends Component {
   }
 }
 
-class TotalUser extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      userData: []
-    };
-  }
-
-  render() {
-    return (
-      <div className="data-wrapper">
-        <div>
-          <h1 className="data-title">Total Users</h1>
-        </div>
-      <div>
-        <h1 className="data-total">
-          {this.props.userData.users.length}
-        </h1>
-      </div>
-      </div>
-    );
-  };
-}
-
-  class Order extends Component {
-
-    constructor(props) {
-      super(props);
-      this.state = {
-      };
-    }
-
-    render() {
-      return (
-        <div className="data-wrapper">
-          <div>
-            <h1 className="data-title">Total Orders</h1>
-          </div>
-        <div>
-          <h1 className="data-total">
-            {this.props.orderData.orders}
-          </h1>
-        </div>
-        </div>
-      );
-    };
-  }
-
-    class Cart extends Component {
-
-    constructor(props) {
-      super(props);
-      this.state = {
-        cartData: []
-      };
-    }
-
-    render() {
-      return (
-        <div className="data-wrapper">
-          <div>
-            <h1 className="data-title">Total Carts</h1>
-          </div>
-        <div>
-          <h1 className="data-total">
-            {this.props.cartData.carts}
-          </h1>
-        </div>
-        </div>
-      );
-    };
-  }
-
-  class Revenue extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      cartData: []
-    };
-  }
-
-  render() {
-    return (
-      <div className="data-wrapper">
-        <div>
-          <h1 id="revenue-title">Revenue</h1>
-        </div>
-      <div>
-        <h1 id="revenue-total">
-          $2,500,000
-        </h1>
-      </div>
-      </div>
-    );
-  };
-}
-
-  class User extends Component {
-
-    constructor(props) {
-      super(props);
-      this.state = {
-        userData: []
-      };
-    }
-
-    render() {
-      return (
-        <td>
-          {this.props.userData.email}
-        </td>
-      );
-    };
-  }
+// class TotalUser extends Component {
+//
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       userData: []
+//     };
+//   }
+//
+//   render() {
+//     return (
+//       <div className="data-wrapper">
+//         <div>
+//           <h1 className="data-title">Total Users</h1>
+//         </div>
+//       <div>
+//         <h1 className="data-total">
+//           {this.props.userData.users.length}
+//         </h1>
+//       </div>
+//       </div>
+//     );
+//   };
+// }
+//
+//   class Order extends Component {
+//
+//     constructor(props) {
+//       super(props);
+//       this.state = {
+//       };
+//     }
+//
+//     render() {
+//       return (
+//         <div className="data-wrapper">
+//           <div>
+//             <h1 className="data-title">Total Orders</h1>
+//           </div>
+//         <div>
+//           <h1 className="data-total">
+//             {this.props.orderData.orders}
+//           </h1>
+//         </div>
+//         </div>
+//       );
+//     };
+//   }
+//
+//     class Cart extends Component {
+//
+//     constructor(props) {
+//       super(props);
+//       this.state = {
+//         cartData: []
+//       };
+//     }
+//
+//     render() {
+//       return (
+//         <div className="data-wrapper">
+//           <div>
+//             <h1 className="data-title">Total Carts</h1>
+//           </div>
+//         <div>
+//           <h1 className="data-total">
+//             {this.props.cartData.carts}
+//           </h1>
+//         </div>
+//         </div>
+//       );
+//     };
+//   }
+//
+//   class Revenue extends Component {
+//
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       cartData: []
+//     };
+//   }
+//
+//   render() {
+//     return (
+//       <div className="data-wrapper">
+//         <div>
+//           <h1 id="revenue-title">Revenue</h1>
+//         </div>
+//       <div>
+//         <h1 id="revenue-total">
+//           $2,500,000
+//         </h1>
+//       </div>
+//       </div>
+//     );
+//   };
+// }
+//
+//   class User extends Component {
+//
+//     constructor(props) {
+//       super(props);
+//       this.state = {
+//         userData: []
+//       };
+//     }
+//
+//     render() {
+//       return (
+//         <td>
+//           <h4 id="table-text">{this.props.userData.email}</h4>
+//         </td>
+//       );
+//     };
+//   }
 
 export default App;
