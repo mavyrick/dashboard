@@ -32,46 +32,42 @@ const chartData = {
     ],
 };
 
-const chartOptions =
-
-{
-  title: {
-          display: true,
-          text: 'Chart',
-          fontSize: 25,
-          fontColor: 'black',
-          position: 'top',
-      },
-      pointDot : false,
-      // responsive: true,
-      maintainAspectRatio: false,
-      responsive: false,
-      legend: {
-         display: false
-       },
-       tooltips: {
-         enabled: false
-      },
-      scales: {
-          yAxes: [{
-              ticks: {
-                  fontColor: 'black',
-                  fontStyle: 'bold',
-              },
-              gridLines: {
-                // display: false,
-              },
-          }],
-        xAxes: [{
-              ticks: {
-                  fontColor: 'black',
-                  fontStyle: 'bold'
-              },
-              gridLines: {
-                display: false,
-              },
-          }]
-      }
+const chartOptions = {
+title: {
+        display: true,
+        text: 'Chart',
+        fontSize: 25,
+        fontColor: 'black',
+        position: 'top',
+    },
+    pointDot : false,
+    maintainAspectRatio: false,
+    responsive: false,
+    legend: {
+       display: false
+     },
+     tooltips: {
+       enabled: false
+    },
+    scales: {
+        yAxes: [{
+            ticks: {
+                fontColor: 'black',
+                fontStyle: 'bold',
+            },
+            gridLines: {
+            },
+        }],
+      xAxes: [{
+          ticks: {
+              fontColor: 'black',
+              fontStyle: 'bold'
+          },
+          gridLines: {
+            display: false,
+          },
+      }]
+  }
 }
 
 class App extends Component {
@@ -91,8 +87,6 @@ class App extends Component {
         totalUsers: [],
         amountDeposit: [],
         totalProcessed: [],
-        chartData: ['test'],
-        chartOptions: ['test'],
         amountPrice: [],
         newClients: [],
         }
@@ -124,23 +118,23 @@ class App extends Component {
 
   renderTotalUserData(userData) {
     if(userData.users) {
-            return(
-          <div>
+      return(
+        <div>
           <TotalUser userData={userData} />
-          </div>
-        )
+        </div>
+      )
     } else {
       return (<div></div>)
     }
   }
 
   renderOrderData(orderData) {
-            return(
-          <div>
-          <Order orderData={orderData} />
-        </div>
-      )
-    }
+    return(
+      <div>
+        <Order orderData={orderData} />
+      </div>
+    )
+  }
 
   renderCartData(cartData) {
             return(
@@ -257,131 +251,11 @@ class App extends Component {
                 {this.renderCartData(this.state.cartData)}
                 </div>
               </div>
-              {/* <div className="row">
-                <h1 id="revenue">Total Revenue: $2,500,000</h1>
-                </div> */}
         </div>
         </center>
         </div>
     )
   }
 }
-
-// class TotalUser extends Component {
-//
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       userData: []
-//     };
-//   }
-//
-//   render() {
-//     return (
-//       <div className="data-wrapper">
-//         <div>
-//           <h1 className="data-title">Total Users</h1>
-//         </div>
-//       <div>
-//         <h1 className="data-total">
-//           {this.props.userData.users.length}
-//         </h1>
-//       </div>
-//       </div>
-//     );
-//   };
-// }
-//
-//   class Order extends Component {
-//
-//     constructor(props) {
-//       super(props);
-//       this.state = {
-//       };
-//     }
-//
-//     render() {
-//       return (
-//         <div className="data-wrapper">
-//           <div>
-//             <h1 className="data-title">Total Orders</h1>
-//           </div>
-//         <div>
-//           <h1 className="data-total">
-//             {this.props.orderData.orders}
-//           </h1>
-//         </div>
-//         </div>
-//       );
-//     };
-//   }
-//
-//     class Cart extends Component {
-//
-//     constructor(props) {
-//       super(props);
-//       this.state = {
-//         cartData: []
-//       };
-//     }
-//
-//     render() {
-//       return (
-//         <div className="data-wrapper">
-//           <div>
-//             <h1 className="data-title">Total Carts</h1>
-//           </div>
-//         <div>
-//           <h1 className="data-total">
-//             {this.props.cartData.carts}
-//           </h1>
-//         </div>
-//         </div>
-//       );
-//     };
-//   }
-//
-//   class Revenue extends Component {
-//
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       cartData: []
-//     };
-//   }
-//
-//   render() {
-//     return (
-//       <div className="data-wrapper">
-//         <div>
-//           <h1 id="revenue-title">Revenue</h1>
-//         </div>
-//       <div>
-//         <h1 id="revenue-total">
-//           $2,500,000
-//         </h1>
-//       </div>
-//       </div>
-//     );
-//   };
-// }
-//
-//   class User extends Component {
-//
-//     constructor(props) {
-//       super(props);
-//       this.state = {
-//         userData: []
-//       };
-//     }
-//
-//     render() {
-//       return (
-//         <td>
-//           <h4 id="table-text">{this.props.userData.email}</h4>
-//         </td>
-//       );
-//     };
-//   }
 
 export default App;
